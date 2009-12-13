@@ -1,12 +1,12 @@
 @CHARSET "UTF-8";
 
-body { width: 1000px; margin: 20px auto; font-family: Georgia; font-size: 14px; }
+body { width: 1000px; margin: 20px auto; font-family: Georgia; font-size: 14px; background: #CFCFCF url(main.png) no-repeat top center; }
 
 
 a { color: #5C7F99; text-decoration: none; }
 a:hover { text-decoration: underline; }
 
-code { color: #0101C8; }
+code { color: #0101C8; background-color: #FFF; padding: 20px; display: block; -moz-border-radius: 5px; }
 
 h1, h2, h3 { padding: 0; margin: 0; font-family: Georgia; }
 h3 { font-size: 16px; }
@@ -21,12 +21,12 @@ h3 { font-size: 16px; }
 
 #doc, #note, #spread, #examples { padding-top: 40px; line-height: 20px; clear: both; }
 
-#head { float: left; width: 278px; padding: 0 50px; font-size: 16px; }
-#head h1 { background: url(jqbargraphlogo.png) no-repeat; padding-left: 40px; font-size: 35px; }
-#head h1 small { font-size: 22px; }
+#head { float: left; width: 360px; padding: 0 50px; font-size: 16px; }
+#head h1 { background: url(jqbargraphlogo.png) no-repeat; font-size: 35px; }
+#head h1 small { font-size: 22px; padding-left: 20px; }
 
-#head .download a { text-decoration: none; font-style: italic; font-size: 16px; }
-#head .download a:hover { text-decoration: underline; }
+#head .download a { -moz-border-radius: 5px; font-style: italic; font-size: 16px; background-color: #9b9b9b; color: white; padding: 5px 10px; width: 200px; margin: 5px; display: block; }
+#head .download a:hover { background-color: #474747; text-decoration: none; }
 
 #head .headText {  }
 
@@ -40,14 +40,13 @@ h3 { font-size: 16px; }
 
 /*--- shared */
 
-.ir { float: left; height: 450px; position: absolute; }
-
-#imageRotatorHolder {width: 600px; float: left; text-align: center; height: 450px; padding: 5px; border: 1px solid #ccc; }
-
-#imageRotator{ width: 600px; float: left; text-align: center; height: 450px; position: relative; background-position: top left; }
 
 
-.irTitle { background-color: #111; border-top: 1px solid black; color: #666; padding: 10px 10px; position: absolute; z-index: 1000; bottom: 0; width: 580px; right: 0; text-align: left; }
+#ftHolder { width: 500px; float: left; text-align: center; height: 332px; padding-top: 90px; }
+#ft { border: 5px solid #BAD340; -moz-border-radius: 5px; }
+
+
+.ft-title { background-color: #111; border-top: 1px solid black; color: #666; padding: 10px 10px; position: absolute; z-index: 1000; bottom: 0; width: 480px; left: 0; text-align: left; }
 
 
 /*--- end:shared */

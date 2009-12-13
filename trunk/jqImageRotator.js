@@ -38,7 +38,7 @@
 	var order = new Array;
 	var imgInc = new Array;
 	var inc = new Array;
-	var barInt = new Array;
+	var stripInt = new Array;
 	
 	
 	$.fn.jqImageRotator = $.fn.jqimagerotator = function(options){
@@ -48,21 +48,21 @@
 		opts[el.id] = $.extend({}, $.fn.jqImageRotator.defaults, options);
 		img[el.id] = new Array(); // images array
 		titles[el.id] = new Array(); // titles array
-		order[el.id] = new Array(); // bars order array
+		order[el.id] = new Array(); // strips order array
 		imgInc[el.id] = 0;
 		inc[el.id] = 0;
 		
-		startMe(el);
+		$.startMe(el);
 
 	};
-	
-	startMe = function(el){
+
+	$.startMe = function(el){
 		params = opts[el.id];
 
-		// width of bars
-		barWidth = parseInt(params.width / params.noOfBars); 
-		gap = params.width - barWidth*params.noOfBars; // number of pixels
-		barLeft = 0;
+		// width of strips
+		stripWidth = parseInt(params.width / params.strips); 
+		gap = params.width - stripWidth*params.strips; // number of pixels
+		stripLeft = 0;
 
 		// create images and titles arrays
 		$.each($('#'+el.id+' img'), function(i,item){
@@ -71,7 +71,7 @@
 			$(item).hide();
 		});
 
-		// set first image
+		// set panel
 		$('#'+el.id).css({
 			'background-image':'url('+img[el.id][0]+')',
 			'width': params.width,
@@ -79,46 +79,46 @@
 			'position': 'relative',
 			'background-position': 'top left'
 			});
-		$('#'+el.id).append("<div class='irTitle' id='title"+el.id+"' style='position: absolute; bottom:0; z-index: 1000'>"+titles[el.id][0]+"</div>");
+		$('#'+el.id).append("<div class='ft-title' id='ft-title-"+el.id+"' style='position: absolute; bottom:0; z-index: 1000'>"+titles[el.id][0]+"</div>");
 	
 		if(titles[el.id][imgInc[el.id]])
-			$('#title'+el.id).css('opacity',opts[el.id].titleOpacity);
+			$('#ft-title-'+el.id).css('opacity',opts[el.id].titleOpacity);
 		else
-			$('#title'+el.id).css('opacity',0);
+			$('#ft-title-'+el.id).css('opacity',0);
 
 		odd = 1;
 		// creating bars
 		// and set their position
-		for(j=1; j < params.noOfBars+1; j++){
+		for(j=1; j < params.strips+1; j++){
 			
 			if( gap > 0){
-				tbarWidth = barWidth + 1;
+				tstripWidth = stripWidth + 1;
 				gap--;
 			} else {
-				tbarWidth = barWidth;
+				tstripWidth = stripWidth;
 			}
 				
-			$('#'+el.id).append("<div class='ir"+el.id+"' id='ir"+el.id+j+"' style='width:"+tbarWidth+"px; height:"+params.height+"px; float: left; position: absolute;'></div>");
+			$('#'+el.id).append("<div class='ft-"+el.id+"' id='ft-"+el.id+j+"' style='width:"+tstripWidth+"px; height:"+params.height+"px; float: left; position: absolute;'></div>");
 
 			// positioning bars
-			$("#ir"+el.id+j).css({ 
-				'background-position': -barLeft +'px top',
-				'left' : barLeft 
+			$("#ft-"+el.id+j).css({ 
+				'background-position': -stripLeft +'px top',
+				'left' : stripLeft 
 			});
 			
-			barLeft += tbarWidth;
+			stripLeft += tstripWidth;
 
-			if(params.barPosition == 'bottom')
-				$("#ir"+el.id+j).css( 'bottom', 0 );
+			if(params.position == 'bottom')
+				$("#ft-"+el.id+j).css( 'bottom', 0 );
 				
-			if (j%2 == 0 && params.barPosition == 'alternate')
-				$("#ir"+el.id+j).css( 'bottom', 0 );
+			if (j%2 == 0 && params.position == 'alternate')
+				$("#ft-"+el.id+j).css( 'bottom', 0 );
 	
 			// bars order
 				// fountain
 				if(params.direction == 'fountain' || params.direction == 'fountainAlternate'){ 
-					order[el.id][j-1] = parseInt(params.noOfBars/2) - (parseInt(j/2)*odd);
-					order[el.id][params.noOfBars-1] = params.noOfBars; // fix for odd number of bars
+					order[el.id][j-1] = parseInt(params.strips/2) - (parseInt(j/2)*odd);
+					order[el.id][params.strips-1] = params.strips; // fix for odd number of bars
 					odd *= -1;
 				} else {
 				// linear
@@ -127,32 +127,32 @@
 	
 		}
 
-			$('.ir'+el.id).mouseover(function(){
+			$('.ft-'+el.id).mouseover(function(){
 				opts[el.id].pause = true;
 			});
 		
-			$('.ir'+el.id).mouseout(function(){
+			$('.ft-'+el.id).mouseout(function(){
 				opts[el.id].pause = false;
 			});	
 			
-			$('#title'+el.id).mouseover(function(){
+			$('.ft-title-'+el.id).mouseover(function(){
 				opts[el.id].pause = true;
 			});
 		
-			$('#title'+el.id).mouseout(function(){
+			$('.ft-title-'+el.id).mouseout(function(){
 				opts[el.id].pause = false;
 			});				
 		
-		imgInt = setInterval(function() { callChange(el)  }, params.delay+params.barDelay*params.noOfBars);
+		imgInt = setInterval(function() { $.transition(el)  }, params.delay+params.stripDelay*params.strips);
 
 	};
 
 	// transition
-	callChange = function(el){
+	$.transition = function(el){
 
 		if(opts[el.id].pause == true) return;
 
-		barInt[el.id] = setInterval(function() { change(order[el.id][inc[el.id]], el)  },opts[el.id].barDelay);
+		stripInt[el.id] = setInterval(function() { $.strips(order[el.id][inc[el.id]], el)  },opts[el.id].stripDelay);
 		
 		$('#'+el.id).css({ 'background-image': 'url('+img[el.id][imgInc[el.id]]+')' });
 		
@@ -163,11 +163,11 @@
 		}
 		
 		if(titles[el.id][imgInc[el.id]]!=''){
-			$('#title'+el.id).animate({ opacity: 0 }, opts[el.id].titleSpeed, function(){
+			$('#ft-title-'+el.id).animate({ opacity: 0 }, opts[el.id].titleSpeed, function(){
 				$(this).html(titles[el.id][imgInc[el.id]]).animate({ opacity: opts[el.id].titleOpacity }, opts[el.id].titleSpeed);
 			});
 		} else {
-			$('#title'+el.id).animate({ opacity: 0}, opts[el.id].titleSpeed);
+			$('#ft-title-'+el.id).animate({ opacity: 0}, opts[el.id].titleSpeed);
 		}
 		
 		inc[el.id] = 0;
@@ -182,31 +182,31 @@
 	};
 
 
-	// bar animations
-	change = function(itemId, el){
+	// strips animations
+	$.strips = function(itemId, el){
 
-		temp = opts[el.id].noOfBars;
+		temp = opts[el.id].strips;
 		if (inc[el.id] == temp) {
-			clearInterval(barInt[el.id]);
+			clearInterval(stripInt[el.id]);
 			return;
 		}
 		
-		$('#ir'+el.id+itemId).css({ height: 0, opacity: 0, 'background-image': 'url('+img[el.id][imgInc[el.id]]+')' });
-		$('#ir'+el.id+itemId).animate({ height: opts[el.id].height, opacity: 1 }, 1000);
+		$('#ft-'+el.id+itemId).css({ height: 0, opacity: 0, 'background-image': 'url('+img[el.id][imgInc[el.id]]+')' });
+		$('#ft-'+el.id+itemId).animate({ height: opts[el.id].height, opacity: 1 }, 1000);
 		inc[el.id]++;
 		
 	};
 
 	// shuffle array function
-	fisherYates = function(myArray) {
-		  var i = myArray.length;
+	fisherYates = function(arr) {
+		  var i = arr.length;
 		  if ( i == 0 ) return false;
 		  while ( --i ) {
 		     var j = Math.floor( Math.random() * ( i + 1 ) );
-		     var tempi = myArray[i];
-		     var tempj = myArray[j];
-		     myArray[i] = tempj;
-		     myArray[j] = tempi;
+		     var tempi = arr[i];
+		     var tempj = arr[j];
+		     arr[i] = tempj;
+		     arr[j] = tempi;
 		   }
 		}	
 		
@@ -214,7 +214,7 @@
 		function(){ init(this); }
 	);
 	
-	
+
 	
 	
 };
@@ -223,12 +223,12 @@
 	$.fn.jqImageRotator.defaults = {	
 		width: 500,
 		height: 332,
-		noOfBars: 20,
+		strips: 20,
 		delay: 5000,
-		barDelay: 50,
+		stripDelay: 50,
 		titleOpacity: 0.8,
 		titleSpeed: 1000,
-		barPosition: 'top', // top, bottom, alternate
+		position: 'top', // top, bottom, alternate
 		direction: 'alternate' // left, right, alternate, random, fountain, fountainAlternate
 		
 	};

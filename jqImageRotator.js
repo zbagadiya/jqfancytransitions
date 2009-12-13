@@ -1,33 +1,13 @@
 /**
  * jqBarGraph - jQuery plugin
- * @version: 1.0 (2009/11/12)
+ * @version: 1.0 (2009/12/04)
  * @requires jQuery v1.2.2 or later 
  * @author Ivan Lazarevic
- * website: http://www.workshop.rs/jqbargraph/
+ * Examples and documentation at: http://www.workshop.rs/jqbargraph/
  
- * @param data: arrayOfData // array of data for your graph
- * @param title: false // title of your graph, accept HTML
- * @param barSpace: 10 // this is default space between bars in pixels
- * @param width: 400 // default width of your graph
- * @param height: 200 //default height of your graph
- * @param color: '#000000' // if you don't send colors for your data this will be default bars color
- * @param colors: false // array of colors that will be used for your bars and legends
- * @param lbl: '' // if there is no label in your array
- * @param sort: false // sort your data before displaying graph, you can sort as 'asc' or 'desc'
- * @param position: 'bottom' // position of your bars, can be 'bottom' or 'top'. 'top' doesn't work for multi type
- * @param prefix: '' // text that will be shown before every label
- * @param postfix: '' // text that will be shown after every label
- * @param animate: true // if you don't need animated appereance change to false
- * @param speed: 2 // speed of animation in seconds
- * @param legendWidth: 100 // width of your legend box
- * @param legend: false // if you want legend change to true
- * @param legends: false // array for legend. for simple graph type legend will be extracted from labels if you don't set this
- * @param type: false // for multi array data default graph type is stacked, you can change to 'multi' for multi bar type
- * @param showValues: true // you can use this for multi and stacked type and it will show values of every bar part
- * @param showValuesColor: '#fff' // color of font for values 
-
- * @example  $('#divForGraph').jqBarGraph({ data: arrayOfData });  
-  
+ * Dual licensed under the MIT and GPL licenses:
+ *   http://www.opensource.org/licenses/mit-license.php
+ *   http://www.gnu.org/licenses/gpl.html
 **/
 
 (function($) {
@@ -79,7 +59,7 @@
 			'position': 'relative',
 			'background-position': 'top left'
 			});
-		$('#'+el.id).append("<div class='ft-title' id='ft-title-"+el.id+"' style='position: absolute; bottom:0; z-index: 1000'>"+titles[el.id][0]+"</div>");
+		$('#'+el.id).append("<div class='ft-title' id='ft-title-"+el.id+"' style='position: absolute; bottom:0; z-index: 1000; color: #fff; background-color: #000; '>"+titles[el.id][0]+"</div>");
 	
 		if(titles[el.id][imgInc[el.id]])
 			$('#ft-title-'+el.id).css('opacity',opts[el.id].titleOpacity);
@@ -223,7 +203,7 @@
 		strips: 20,
 		delay: 5000,
 		stripDelay: 50,
-		titleOpacity: 0.8,
+		titleOpacity: 0.7,
 		titleSpeed: 1000,
 		position: 'alternate', // top, bottom, alternate
 		direction: 'fountainAlternate' // left, right, alternate, random, fountain, fountainAlternate		

@@ -135,11 +135,11 @@
 				opts[el.id].pause = false;
 			});	
 			
-			$('.ft-title-'+el.id).mouseover(function(){
+			$('#ft-title-'+el.id).mouseover(function(){
 				opts[el.id].pause = true;
 			});
 		
-			$('.ft-title-'+el.id).mouseout(function(){
+			$('#ft-title-'+el.id).mouseout(function(){
 				opts[el.id].pause = false;
 			});				
 		
@@ -173,7 +173,7 @@
 		inc[el.id] = 0;
 
 		if(opts[el.id].direction == 'random')
-			fisherYates (order[el.id]);
+			$.fisherYates (order[el.id]);
 			
 		if((opts[el.id].direction == 'right' && order[el.id][0] == 1) 
 			|| opts[el.id].direction == 'alternate'
@@ -198,25 +198,22 @@
 	};
 
 	// shuffle array function
-	fisherYates = function(arr) {
-		  var i = arr.length;
-		  if ( i == 0 ) return false;
-		  while ( --i ) {
-		     var j = Math.floor( Math.random() * ( i + 1 ) );
-		     var tempi = arr[i];
-		     var tempj = arr[j];
-		     arr[i] = tempj;
-		     arr[j] = tempi;
-		   }
-		}	
+	$.fisherYates = function(arr) {
+	  var i = arr.length;
+	  if ( i == 0 ) return false;
+	  while ( --i ) {
+	     var j = Math.floor( Math.random() * ( i + 1 ) );
+	     var tempi = arr[i];
+	     var tempj = arr[j];
+	     arr[i] = tempj;
+	     arr[j] = tempi;
+	   }
+	}	
 		
 	this.each (
 		function(){ init(this); }
 	);
-	
-
-	
-	
+		
 };
 
 	// default values
@@ -228,9 +225,8 @@
 		stripDelay: 50,
 		titleOpacity: 0.8,
 		titleSpeed: 1000,
-		position: 'top', // top, bottom, alternate
-		direction: 'alternate' // left, right, alternate, random, fountain, fountainAlternate
-		
+		position: 'alternate', // top, bottom, alternate
+		direction: 'fountainAlternate' // left, right, alternate, random, fountain, fountainAlternate		
 	};
 	
 })(jQuery);

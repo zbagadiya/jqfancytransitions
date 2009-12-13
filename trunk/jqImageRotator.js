@@ -62,7 +62,7 @@
 		// width of bars
 		barWidth = parseInt(params.width / params.noOfBars); 
 		gap = params.width - barWidth*params.noOfBars; // number of pixels
-		
+		barLeft = 0;
 
 		// create images and titles arrays
 		$.each($('#'+el.id+' img'), function(i,item){
@@ -88,16 +88,31 @@
 
 		odd = 1;
 		// creating bars
+		// and set their position
 		for(j=1; j < params.noOfBars+1; j++){
 			
-			if(j % gap == 0){
+			if( gap > 0){
 				tbarWidth = barWidth + 1;
-				
+				gap--;
 			} else {
 				tbarWidth = barWidth;
 			}
 				
-			$('#'+el.id).append("<div class='ir"+el.id+"' id='ir"+el.id+j+"' style='width:"+barWidth+"px; height:"+params.height+"px; float: left; position: absolute;'></div>");
+			$('#'+el.id).append("<div class='ir"+el.id+"' id='ir"+el.id+j+"' style='width:"+tbarWidth+"px; height:"+params.height+"px; float: left; position: absolute;'></div>");
+
+			// positioning bars
+			$("#ir"+el.id+j).css({ 
+				'background-position': -barLeft +'px top',
+				'left' : barLeft 
+			});
+			
+			barLeft += tbarWidth;
+
+			if(params.barPosition == 'bottom')
+				$("#ir"+el.id+j).css( 'bottom', 0 );
+				
+			if (j%2 == 0 && params.barPosition == 'alternate')
+				$("#ir"+el.id+j).css( 'bottom', 0 );
 	
 			// bars order
 				// fountain
@@ -111,7 +126,6 @@
 				}
 	
 		}
-
 
 			$('.ir'+el.id).mouseover(function(){
 				opts[el.id].pause = true;
@@ -128,26 +142,10 @@
 			$('#title'+el.id).mouseout(function(){
 				opts[el.id].pause = false;
 			});				
-
-		// positining bars
-		$.each($(".ir"+el.id), function(i,item){
-			$(item).css({ 
-				'background-position': -barWidth*i+'px top',
-				'left' : barWidth*i
-				});
-			
-			if(params.barPosition == 'bottom')
-				$(item).css( 'bottom', 0 );
-			
-			if (i%2 == 0 && params.barPosition == 'alternate')
-				$(item).css( 'bottom', 0 );
-				  
-		});
 		
 		imgInt = setInterval(function() { callChange(el)  }, params.delay+params.barDelay*params.noOfBars);
 
 	};
-
 
 	// transition
 	callChange = function(el){
@@ -192,6 +190,7 @@
 			clearInterval(barInt[el.id]);
 			return;
 		}
+		
 		$('#ir'+el.id+itemId).css({ height: 0, opacity: 0, 'background-image': 'url('+img[el.id][imgInc[el.id]]+')' });
 		$('#ir'+el.id+itemId).animate({ height: opts[el.id].height, opacity: 1 }, 1000);
 		inc[el.id]++;
@@ -220,22 +219,18 @@
 	
 };
 
-
-
-
 	// default values
 	$.fn.jqImageRotator.defaults = {	
-		width: 600,
-		height: 450,
+		width: 500,
+		height: 332,
 		noOfBars: 20,
 		delay: 5000,
 		barDelay: 50,
-		titleOpacity: 0.5,
+		titleOpacity: 0.8,
 		titleSpeed: 1000,
-		barPosition: 'alternate', // top, bottom, alternate
-		direction: 'fountainAlternate' // left, right, alternate, random, fountain, fountainAlternate
+		barPosition: 'top', // top, bottom, alternate
+		direction: 'alternate' // left, right, alternate, random, fountain, fountainAlternate
 		
 	};
 	
-
 })(jQuery);

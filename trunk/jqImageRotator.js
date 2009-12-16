@@ -1,9 +1,9 @@
 /**
- * jqBarGraph - jQuery plugin
+ * jqFancyTransitions - jQuery plugin
  * @version: 1.0 (2009/12/04)
  * @requires jQuery v1.2.2 or later 
  * @author Ivan Lazarevic
- * Examples and documentation at: http://www.workshop.rs/jqbargraph/
+ * Examples and documentation at: http://www.workshop.rs/projects/jqfancytransitions
  
  * Dual licensed under the MIT and GPL licenses:
  *   http://www.opensource.org/licenses/mit-license.php
@@ -19,24 +19,19 @@
 	var imgInc = new Array;
 	var inc = new Array;
 	var stripInt = new Array;
+	var imgInt = new Array;	
 	
-	
-	$.fn.jqImageRotator = $.fn.jqimagerotator = function(options){
+	$.fn.jqFancyTransitions = $.fn.jqFancyTransitions = function(options){
 	
 	init = function(el){
 
-		opts[el.id] = $.extend({}, $.fn.jqImageRotator.defaults, options);
+		opts[el.id] = $.extend({}, $.fn.jqFancyTransitions.defaults, options);
 		img[el.id] = new Array(); // images array
 		titles[el.id] = new Array(); // titles array
 		order[el.id] = new Array(); // strips order array
 		imgInc[el.id] = 0;
 		inc[el.id] = 0;
-		
-		$.startMe(el);
 
-	};
-
-	$.startMe = function(el){
 		params = opts[el.id];
 
 		// width of strips
@@ -59,7 +54,7 @@
 			'position': 'relative',
 			'background-position': 'top left'
 			});
-		$('#'+el.id).append("<div class='ft-title' id='ft-title-"+el.id+"' style='position: absolute; bottom:0; z-index: 1000; color: #fff; background-color: #000; '>"+titles[el.id][0]+"</div>");
+		$('#'+el.id).append("<div class='ft-title' id='ft-title-"+el.id+"' style='position: absolute; bottom:0; left: 0; z-index: 1000; color: #fff; background-color: #000; '>"+titles[el.id][0]+"</div>");
 	
 		if(titles[el.id][imgInc[el.id]])
 			$('#ft-title-'+el.id).css('opacity',opts[el.id].titleOpacity);
@@ -123,13 +118,14 @@
 				opts[el.id].pause = false;
 			});				
 		
-		imgInt = setInterval(function() { $.transition(el)  }, params.delay+params.stripDelay*params.strips);
+		clearInterval(imgInt[el.id]);	
+		imgInt[el.id] = setInterval(function() { $.transition(el)  }, params.delay+params.stripDelay*params.strips);
 
 	};
 
 	// transition
 	$.transition = function(el){
-
+console.log(imgInt[el.id]);
 		if(opts[el.id].pause == true) return;
 
 		stripInt[el.id] = setInterval(function() { $.strips(order[el.id][inc[el.id]], el)  },opts[el.id].stripDelay);
@@ -171,8 +167,15 @@
 			return;
 		}
 		
-		$('#ft-'+el.id+itemId).css({ height: 0, opacity: 0, 'background-image': 'url('+img[el.id][imgInc[el.id]]+')' });
-		$('#ft-'+el.id+itemId).animate({ height: opts[el.id].height, opacity: 1 }, 1000);
+		if(opts[el.id].position == 'curtain'){
+			currWidth = $('#ft-'+el.id+itemId).width();
+			$('#ft-'+el.id+itemId).css({ width: 0, opacity: 0, 'background-image': 'url('+img[el.id][imgInc[el.id]]+')' });
+			$('#ft-'+el.id+itemId).animate({ width: currWidth, opacity: 1 }, 1000);
+		} else {
+			$('#ft-'+el.id+itemId).css({ height: 0, opacity: 0, 'background-image': 'url('+img[el.id][imgInc[el.id]]+')' });
+			$('#ft-'+el.id+itemId).animate({ height: opts[el.id].height, opacity: 1 }, 1000);
+		}
+		
 		inc[el.id]++;
 		
 	};
@@ -197,15 +200,15 @@
 };
 
 	// default values
-	$.fn.jqImageRotator.defaults = {	
-		width: 500,
-		height: 332,
-		strips: 20,
-		delay: 5000,
-		stripDelay: 50,
-		titleOpacity: 0.7,
-		titleSpeed: 1000,
-		position: 'alternate', // top, bottom, alternate
+	$.fn.jqFancyTransitions.defaults = {	
+		width: 500, // width of panel
+		height: 332, // height of panel
+		strips: 20, // number of strips
+		delay: 5000, // delay between images in ms
+		stripDelay: 50, // delay beetwen strips in ms
+		titleOpacity: 0.7, // opacity of title
+		titleSpeed: 1000, // speed of title appereance in ms
+		position: 'alternate', // top, bottom, alternate, curtain
 		direction: 'fountainAlternate' // left, right, alternate, random, fountain, fountainAlternate		
 	};
 	

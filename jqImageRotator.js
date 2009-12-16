@@ -36,7 +36,7 @@
 
 		if(params.effect == 'zipper'){ params.direction = 'alternate'; params.position = 'alternate'; }
 		if(params.effect == 'wave'){ params.direction = 'alternate'; params.position = 'top'; }
-		if(params.effect == 'curtain'){ params.direction = 'fountainAlternate'; params.position = 'curtain'; }	
+		if(params.effect == 'curtain'){ params.direction = 'alternate'; params.position = 'curtain'; }	
 
 		// width of strips
 		stripWidth = parseInt(params.width / params.strips); 
@@ -129,7 +129,7 @@
 
 	// transition
 	$.transition = function(el){
-console.log(imgInt[el.id]);
+
 		if(opts[el.id].pause == true) return;
 
 		stripInt[el.id] = setInterval(function() { $.strips(order[el.id][inc[el.id]], el)  },opts[el.id].stripDelay);

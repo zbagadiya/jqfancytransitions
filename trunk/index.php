@@ -20,7 +20,7 @@
 	
 	<p class="headText">
 	<strong>jqFancyTransitions</strong> is easy-to-use <a href="http://www.jquery.com" target="_blank">jQuery</a> 
-	plugin for displaying your gallery with fancy transition effects.
+	plugin for displaying your photos as slideshow with fancy transition effects.
 	</p>
 	
 	<p class="headText">
@@ -39,11 +39,14 @@
 <div id="ftHolder">
 
 	<div id="ft">
-		<img src="photo-1.jpg" alt="Marko Manojlovic" />
-		<img src="http://farm3.static.flickr.com/2735/4133306402_575e142984.jpg" 
+		<img src="terrace_view_marko_manojlovic.jpg" 
+			 alt="<i>Terrace View <a href='http://sniperyu.deviantart.com/'>by Marko Manojlovic</a></i>" />
+		<img src="nbg1_goran_jovanovic.jpg" 
+			 alt="NBG #1 <i><a href='http://picasaweb.google.com/azzazel'>by Goran Jovanovic</a></i>" />
+		<img src="zakynthos_ivan_jekic.jpg" 
+			 alt="Navagio beach Zakynthos <i><a href='http://ivframes.com/'>by Ivan Jekic</a></i>" />			 
+		<img src="blue_window_igor_srdanovic.jpg" 
 			 alt="Blue Window <i><a href='http://www.igorsrdanovic.com'>by Igor Srdanovic</a></i>" />
-		<img src="http://lh5.ggpht.com/_mCj40vYK9_0/Rr4g6wM_JlI/AAAAAAAAAjA/EgC61Pvy6-w/s640/Picture-002.jpg" 
-			 alt="NBG# 1 <i><a href='http://picasaweb.google.com/azzazel'>by Goran Jovanovic</a></i>" />
 	</div>
 	
 </div>
@@ -51,14 +54,15 @@
 
 <br clear="all" />
 
-
 <script>
 
-	$('#ft').jqimagerotator();
+	$('#ft').jqFancyTransitions();
 
 </script>
 
+
 <br clear="all" />
+
 <div id = "doc">
 
 <h1>Documentation</h1>
@@ -71,25 +75,141 @@ This plugin is really easy to use. After you download plugin and include on your
 	$("#placeHolderID").jqFancyTransitions();
 </code><br />
 
-Of course, there are set of options that you can use to tune presentation of yout LastFM data.<br /><br />
+You have three predifined effects that you can use:
+<ul>
+	<li>Wave</li>
+	<li>Curtain</li>
+	<li>Zipper</li>
+</ul>
+Of course, you can made custom effect with set of options that you can use to set speed, number of strips, direction, type of effect, etc.<br /><br />
 <code>
-	<strong>username:</strong> 'kopipejst' <span class="comment">// your LastFM username</span><br />
-	<strong>api:</strong> '' <span class="comment">// by default this plugin use API key from LastFM documentation. you can put your LastFM API key here</span><br />
-	<strong>limit:</strong> 10 <span class="comment">// number of records that you want to show</span><br />
-	<strong>loading:</strong> '' <span class="comment">// text for placeholder while loading of data is in progress.</span>
+
+	<strong>effect:</strong> '' <span class="comment">// wave, zipper, curtain</span><br />
+	<strong>width:</strong> 500 <span class="comment">// width of panel</span><br />
+	<strong>height:</strong> 332 <span class="comment">// height of panel</span><br />
+	<strong>strips:</strong> 20 <span class="comment">// number of strips</span><br />
+	<strong>delay:</strong> 5000 <span class="comment">// delay between images in ms</span><br />
+	<strong>stripDelay:</strong> 50 <span class="comment">// delay beetwen strips in ms</span><br />
+	<strong>titleOpacity:</strong> 0.7 <span class="comment">// opacity of title</span><br />
+	<strong>titleSpeed:</strong> 1000 <span class="comment">// speed of title appereance in ms</span><br />
+	<strong>position:</strong> 'alternate' <span class="comment">// top, bottom, alternate, curtain</span><br />
+	<strong>direction:</strong> 'fountainAlternate' <span class="comment">// left, right, alternate, random, fountain, fountainAlternate</span>
+
 </code>
 </p>
 
 </div>
 
+<br clear="all" />
+
 <div id="examples">
 	<h1>Examples</h1><br />
-<code>
-$("#simpleLastFM").jqLastFM({
-	user: 'kopipejst',
+<br />
 
-});
-</code>
+	<div class="exampleMenu">
+	    <a href="javascript:void(0);" id="effWave" class="eEff">wave</a>
+	    <a href="javascript:void(0);" id="effZipper" class="eEff">zipper</a>	
+	    <a href="javascript:void(0);" id="effCurtain" class="eEff">curtain</a>	        
+		<a href="javascript:void(0);" id="effFountainTop" class="eComb">fountain top</a> 
+		<a href="javascript:void(0);" id="effRandomTop" class="eComb">random top</a>
+		<a href="javascript:void(0);" id="effCurtainAlternate" class="eComb exampleActive">curtain alternate</a>
+		<a href="javascript:void(0);" id="effLeftTop" class="eComb">left top</a>
+		<a href="javascript:void(0);" id="effRightBottom" class="eComb">right bottom</a>		
+	</div>
+
+	<div id="example">
+		<img src="terrace_view_marko_manojlovic.jpg" 
+			 alt="<i>Terrace View <a href='http://sniperyu.deviantart.com/'>by Marko Manojlovic</a></i>" />
+		<img src="nbg1_goran_jovanovic.jpg" 
+			 alt="NBG #1 <i><a href='http://picasaweb.google.com/azzazel'>by Goran Jovanovic</a></i>" />
+		<img src="zakynthos_ivan_jekic.jpg" 
+			 alt="Navagio beach Zakynthos <i><a href='http://ivframes.com/'>by Ivan Jekic</a></i>" />			 
+		<img src="blue_window_igor_srdanovic.jpg" 
+			 alt="Blue Window <i><a href='http://www.igorsrdanovic.com'>by Igor Srdanovic</a></i>" />
+	</div>
+	
+	<script>
+		$('#example').jqFancyTransitions({ position: 'curtain' });
+
+		$('#effCurtainAlternate').click( function(){
+			$('#example').jqFancyTransitions({ position: 'curtain', direction: 'alternate' });
+			$('#positionDyn').html('curtain');
+			$('#directionDyn').html('alternate');
+		});
+
+		$('#effFountainTop').click( function(){
+			$('#ft-title-example, .ft-example').remove();
+			$('#example').jqFancyTransitions({ position: 'top', direction: 'fountain' });
+			$('#positionDyn').html('top');
+			$('#directionDyn').html('fountain');
+		});	
+
+		$('#effRandomTop').click( function(){
+			$('#ft-title-example, .ft-example').remove();
+			$('#example').jqFancyTransitions({ position: 'top', direction: 'random' });
+			$('#positionDyn').html('random');
+			$('#directionDyn').html('top');
+		});	
+
+		$('#effLeftTop').click( function(){
+			$('#ft-title-example, .ft-example').remove();
+			$('#example').jqFancyTransitions({ position: 'top', direction: 'left' });
+			$('#positionDyn').html('left');
+			$('#directionDyn').html('top');
+		});	
+
+		$('#effRightBottom').click( function(){
+			$('#ft-title-example, .ft-example').remove();
+			$('#example').jqFancyTransitions({ position: 'bottom', direction: 'right' });
+			$('#positionDyn').html('right');
+			$('#directionDyn').html('bottom');
+		});			
+
+		$('.eComb').click( function(){
+			$('#eComb').show();
+			$('#eEff').hide();
+			$('.eComb').removeClass('exampleActive');
+			$('.eEff').removeClass('exampleActive');			
+			$(this).addClass('exampleActive');
+		});	
+
+		$('.eEff').click( function(){
+			$('#eComb').hide();
+			$('#eEff').show();
+			$('.eEff').removeClass('exampleActive');
+			$('.eComb').removeClass('exampleActive');			
+			$(this).addClass('exampleActive');			
+		});	
+
+		$('#effWave').click( function(){
+			$('#ft-title-example, .ft-example').remove();
+			$('#example').jqFancyTransitions({ effect: 'wave' });
+			$('#effDyn').html('wave');
+		});		
+
+		$('#effZipper').click( function(){
+			$('#ft-title-example, .ft-example').remove();
+			$('#example').jqFancyTransitions({ effect: 'zipper' });
+			$('#effDyn').html('zipper');
+		});		
+
+		$('#effCurtain').click( function(){
+			$('#ft-title-example, .ft-example').remove();
+			$('#example').jqFancyTransitions({ effect: 'curtain' });
+			$('#effDyn').html('curtain');
+		});	
+		
+	</script>
+	
+	<code>
+	$("#example").jqFancyTransitions({<br />
+	<span id="eComb">
+	&nbsp;&nbsp;&nbsp;position: '<span id="positionDyn" class="dyn">curtain</span>',<br />
+	&nbsp;&nbsp;&nbsp;direction: '<span id="directionDyn" class="dyn">alternate</span>'<br />	
+	</span>
+	<span id="eEff" style="display: none;">&nbsp;&nbsp;&nbsp;effect: '<span id="effDyn" class="dyn"></span>'<br /></span>
+	});
+	</code>
 </div>
 
 <div id="note">
@@ -101,26 +221,11 @@ $("#simpleLastFM").jqLastFM({
 		<li>You can use and share this plugin absolutly free.</li>
 		<li>Plugin is tested with jQuery 1.2.3. and jQuery 1.3.2. versions</li>
 		<li>This graph will work without any additional CSS, but it can easily be styled via CSS.</li>
-		<li>If you find a bug, have any comments, questions or just want to show me where you use this plugin you can <a href="mailto:devet.sest@gmail.com">email me</a>.</li> 
+		<li>If you find a bug, have any comments, questions or just want to show me where you use this plugin you can <a href="mailto:devet.sest@gmail.com">leave a message on workshop blog</a>.</li> 
 	</ul>
 	
-	</div>
-	
-	<div id="spread">
-	<h1>Spread the word</h1>
-	
-	<ul>
-		<li><a href="http://delicious.com/post?url=http://www.workshop.rs/jqbargraph&title=jqBarGraph: jQuery Bar Graph Plugin">Delicious</a></li> 
-		<li><a href="http://www.stumbleupon.com/submit?url=http://www.workshop.rs/jqbargraph&title=jqBarGraph: jQuery Bar Graph Plugin">StumbleUpon</a></li>
-		<li><a href="http://twitter.com/home?status=just%20found%20great%20jQuery%20plugin%20http://www.workshop.rs/jqbargraph">Tweeter</a></li>
-		<li><a href="http://www.facebook.com/sharer.php?u=http://www.workshop.rs/jqbargraph">Facebook</a></li>  
-		<li><a href="http://digg.com/submit?phase=2&url=http://www.workshop.rs/jqbargraph&title=jqBarGraph: jQuery Bar Graph Plugin">Digg</a></li> 
-		<li><a href="http://reddit.com/submit?url=http://www.workshop.rs/jqbargraph&title=jqBarGraph: jQuery Bar Graph Plugin">Reddit</a></li> 
-		<li><a href="http://technorati.com/faves?add=http://www.workshop.rs/jqbargraph">Technorati</a></li>
-	
-	</ul>
 </div>
-
+	
 <script type="text/javascript">
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
 document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));

@@ -34,6 +34,10 @@
 
 		params = opts[el.id];
 
+		if(params.effect == 'zipper'){ params.direction = 'alternate'; params.position = 'alternate'; }
+		if(params.effect == 'wave'){ params.direction = 'alternate'; params.position = 'top'; }
+		if(params.effect == 'curtain'){ params.direction = 'fountainAlternate'; params.position = 'curtain'; }	
+
 		// width of strips
 		stripWidth = parseInt(params.width / params.strips); 
 		gap = params.width - stripWidth*params.strips; // number of pixels
@@ -209,7 +213,8 @@ console.log(imgInt[el.id]);
 		titleOpacity: 0.7, // opacity of title
 		titleSpeed: 1000, // speed of title appereance in ms
 		position: 'alternate', // top, bottom, alternate, curtain
-		direction: 'fountainAlternate' // left, right, alternate, random, fountain, fountainAlternate		
+		direction: 'fountainAlternate', // left, right, alternate, random, fountain, fountainAlternate
+		effect: '' // curtain, zipper, wave		
 	};
 	
 })(jQuery);

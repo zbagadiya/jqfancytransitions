@@ -21,7 +21,7 @@
 	var stripInt = new Array;
 	var imgInt = new Array;	
 	
-	$.fn.jqFancyTransitions = $.fn.jqFancyTransitions = function(options){
+	$.fn.jqFancyTransitions = $.fn.jqfancytransitions = function(options){
 	
 	init = function(el){
 

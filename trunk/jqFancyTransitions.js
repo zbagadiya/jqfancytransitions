@@ -1,6 +1,6 @@
 /**
  * jqFancyTransitions - jQuery plugin
- * @version: 1.0 (2009/12/04)
+ * @version: 1.5 (2009/12/04)
  * @requires jQuery v1.2.2 or later 
  * @author Ivan Lazarevic
  * Examples and documentation at: http://www.workshop.rs/projects/jqfancytransitions
@@ -58,12 +58,9 @@
 			'position': 'relative',
 			'background-position': 'top left'
 			});
-		$('#'+el.id).append("<div class='ft-title' id='ft-title-"+el.id+"' style='position: absolute; bottom:0; left: 0; z-index: 1000; color: #fff; background-color: #000; '>"+titles[el.id][0]+"</div>");
-	
-		if(titles[el.id][imgInc[el.id]])
-			$('#ft-title-'+el.id).css('opacity',opts[el.id].titleOpacity);
-		else
-			$('#ft-title-'+el.id).css('opacity',0);
+
+		if(params.navigation)
+			$.navigation(el);
 
 		odd = 1;
 		// creating bars
@@ -128,7 +125,7 @@
 	};
 
 	// transition
-	$.transition = function(el){
+	$.transition = function(el,direction){
 
 		if(opts[el.id].pause == true) return;
 
@@ -136,10 +133,20 @@
 		
 		$('#'+el.id).css({ 'background-image': 'url('+img[el.id][imgInc[el.id]]+')' });
 		
-		imgInc[el.id]++;
+		if(typeof(direction) == "undefined")
+			imgInc[el.id]++;
+		else
+			if(direction == 'prev')
+				imgInc[el.id]--;
+			else
+				imgInc[el.id] = direction;
 
 		if  (imgInc[el.id] == img[el.id].length) {
 			imgInc[el.id] = 0;
+		}
+		
+		if (imgInc[el.id] == -1){
+			imgInc[el.id] = img[el.id].length-1;
 		}
 		
 		if(titles[el.id][imgInc[el.id]]!=''){
@@ -184,6 +191,70 @@
 		
 	};
 
+	// navigation
+	$.navigation = function(el){
+		// create prev and next 
+		$('#'+el.id).append("<a href='#' id='ft-prev-"+el.id+"'>prev</a>");
+		$('#'+el.id).append("<a href='#' id='ft-next-"+el.id+"'>next</a>");
+		$('#ft-prev-'+el.id).css({
+			'position' 	: 'absolute',
+			'top'		: params.height/2 - 15,
+			'left'		: 0,
+			'z-index' 	: 1001,
+			'line-height': '30px'
+		}).click( function(e){
+			e.preventDefault();
+			$.transition(el,'prev');
+			clearInterval(imgInt[el.id]);
+			imgInt[el.id] = setInterval(function() { $.transition(el)  }, params.delay+params.stripDelay*params.strips);		
+		});
+
+		$('#ft-next-'+el.id).css({
+			'position' 	: 'absolute',
+			'top'		: params.height/2 - 15,
+			'right'		: 0,
+			'z-index' 	: 1001,
+			'line-height': '30px'
+		}).click( function(e){
+			e.preventDefault();
+			$.transition(el);
+			clearInterval(imgInt[el.id]);
+			imgInt[el.id] = setInterval(function() { $.transition(el)  }, params.delay+params.stripDelay*params.strips);
+		});
+
+		// create title bar
+		$('#'+el.id).append("<div class='ft-title' id='ft-title-"+el.id+"' style='position: absolute; bottom:0; left: 0; z-index: 1000; color: #fff; background-color: #000; '>"+titles[el.id][0]+"</div>");
+		if(titles[el.id][imgInc[el.id]])
+			$('#ft-title-'+el.id).css('opacity',opts[el.id].titleOpacity);
+		else
+			$('#ft-title-'+el.id).css('opacity',0);
+
+		// image buttons
+		$("<div id='ft-buttons-"+el.id+"'></div>").insertAfter($('#'+el.id));
+		$('#ft-buttons-'+el.id).css({
+			'text-align' 	: 'right',
+			'padding-top'	: 5,
+			'width'			: opts[el.id].width
+		});
+		for(k=1;k<img[el.id].length+1;k++){
+			$('#ft-buttons-'+el.id).append("<a href='#' class='ft-button-"+el.id+"'>"+k+"</a>");
+		}
+		$('.ft-button-'+el.id).css({
+			'padding' 	: 5
+		});
+		
+		$.each($('.ft-button-'+el.id), function(i,item){
+			$(item).click( function(e){
+				e.preventDefault();
+				$.transition(el,i);
+				clearInterval(imgInt[el.id]);
+				imgInt[el.id] = setInterval(function() { $.transition(el)  }, params.delay+params.stripDelay*params.strips);				
+			})
+		});		
+	}
+	
+
+
 	// shuffle array function
 	$.fisherYates = function(arr) {
 	  var i = arr.length;
@@ -214,7 +285,8 @@
 		titleSpeed: 1000, // speed of title appereance in ms
 		position: 'alternate', // top, bottom, alternate, curtain
 		direction: 'fountainAlternate', // left, right, alternate, random, fountain, fountainAlternate
-		effect: '' // curtain, zipper, wave		
+		effect: '', // curtain, zipper, wave
+		navigation: false // prev next and buttons		
 	};
 	
 })(jQuery);

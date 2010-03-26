@@ -207,7 +207,8 @@
 			'top'		: params.height/2 - 15,
 			'left'		: 0,
 			'z-index' 	: 1001,
-			'line-height': '30px'
+			'line-height': '30px',
+			'opacity'	: 0.7
 		}).click( function(e){
 			e.preventDefault();
 			$.transition(el,'prev');
@@ -220,7 +221,8 @@
 			'top'		: params.height/2 - 15,
 			'right'		: 0,
 			'z-index' 	: 1001,
-			'line-height': '30px'
+			'line-height': '30px',
+			'opacity'	: 0.7
 		}).click( function(e){
 			e.preventDefault();
 			$.transition(el);
